@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2016 Curtis.
@@ -24,6 +24,7 @@
 package reflectionparser;
 
 /**
+ * A Function interface that allows ParseExceptions to be thrown.
  *
  * @author Curtis
  */

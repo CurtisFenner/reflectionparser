@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2016 Curtis.
@@ -32,6 +32,13 @@ public class ParseException extends Exception {
 	public final Token token;
 	public final String message;
 
+	/**
+	 * Produce an exception about a problem parsing near `token`.
+	 *
+	 * @param message A message explaining the violated assumption the parser
+	 * found; e.g., "expected semicolon to end statement"
+	 * @param token The token where the parser discovered a problem
+	 */
 	public ParseException(String message, Token token) {
 		super(message + " near " + token);
 		this.message = message;

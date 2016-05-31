@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2016 Curtis.
@@ -29,6 +29,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * The Keyword field annotation annotates a public String field. It represents a
+ * literal that should be matched by the Mirror parser.
  *
  * @author Curtis
  */

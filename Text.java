@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2016 Curtis.
@@ -27,6 +27,7 @@ import java.util.List;
 import reflectionparser.Token.EndOf;
 
 /**
+ * Text represents a view into a sequence of Tokens.
  *
  * @author Curtis
  */

@@ -39,6 +39,26 @@ import java.util.logging.Logger;
 import util.Pair;
 
 /**
+ * The Mirror parser uses reflection to allow parsing of 'parsable' types. A
+ * parsable type takes one of several forms:
+ *
+ * 1. a class annotated with @Alternation, with public fields as the candidates
+ *
+ * 2. a class with a `public static T match(String word)` method, which returns
+ * . null in the event of a non-match.
+ *
+ * 3. a class with public fields annotated with Component, Delimited, Keyword,
+ * OneOrMore, ZeroOrMore, and Optional. The "value" field on these annotations
+ * indicates the sequence-order of the fields (since the source-order is not
+ * significant in Java). The Required annotation can be used to produce
+ * ParseExceptions in the absence of an expected field.
+ *
+ *
+ * parseOne(Class kind, Text text) is the main public interface of this class.
+ *
+ * grammar(Class root) produces a BNF-like representation of the grammar of a
+ * class, which may be useful for documenting/debugging the structure of your
+ * parsable classes.
  *
  * @author Curtis
  */
@@ -50,7 +70,15 @@ public class Mirror {
 	private static Object lastSource = null;
 
 	// GRAMMAR /////////////////////////////////////////////////////////////////
-	// Produce a representation of the grammar of a single type.
+	/**
+	 * Generates a string representation of the grammar for parsable class
+	 * `kind`.
+	 *
+	 * @param kind The parsable class to generate a grammar for.
+	 *
+	 * @return A representation of the grammar as a string, and the set of all
+	 * parsable classes that this class is dependent on.
+	 */
 	private static <T> Pair<String, Set<Class>> grammarOne(Class<T> kind) {
 		Set<Class> dep = new HashSet<>();
 		if (isAlternation(kind)) {
@@ -94,6 +122,16 @@ public class Mirror {
 		return new Pair<>(result, dep);
 	}
 
+	/**
+	 * Generate a string representation of a grammar that is parsable by Mirror.
+	 * The grammar includes all classes needed to describe those representable
+	 * by some "top level" parsable `root` class.
+	 *
+	 * @param <T>
+	 * @param root The "top-level" parsable type to generate the grammar using.
+	 *
+	 * @return A string representation of the grammar of `root`
+	 */
 	public static <T> String grammar(Class<T> root) {
 		Set<Class> seen = new HashSet<>();
 		Pair<String, Set<Class>> initial = grammarOne(root);
@@ -406,6 +444,17 @@ public class Mirror {
 		return value;
 	}
 
+	/**
+	 * Parses a single instance of a parsable class.
+	 *
+	 * @param kind The parsable class to parse.
+	 * @param text The Text from which to parse.
+	 *
+	 * @return null, if the parse fails. Otherwise, returns a Parse,
+	 * representing the parsed object, and the remainder of the text.
+	 *
+	 * @throws ParseException
+	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Parse<T> parseOne(Class<T> kind, Text text) throws ParseException {
 		if (text.end()) {

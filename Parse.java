@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2016 Curtis.
@@ -24,6 +24,8 @@
 package reflectionparser;
 
 /**
+ * Represents the result of a parsing operation. Returns the parsed object, and
+ * the remainder of the text (beginning after the parsed object ends).
  *
  * @author Curtis
  */

@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2016 Curtis.
@@ -24,6 +24,7 @@
 package reflectionparser;
 
 /**
+ * A single element of Text. Text objects should be produced by some lexer.
  *
  * @author Curtis
  */

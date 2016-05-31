@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2016 Curtis.
@@ -29,6 +29,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * A field annotation indicating the field (which is a List<T> for some parsable
+ * T) is repeated one or more times.
  *
  * @author Curtis
  */
